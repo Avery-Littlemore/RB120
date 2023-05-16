@@ -21,7 +21,7 @@ end
 module DoesItRock
   API_KEY = 'wrong key'
 
-  class NoScore; end
+  class NoScore; d
 
   class Score
     def self.for_term(term)
