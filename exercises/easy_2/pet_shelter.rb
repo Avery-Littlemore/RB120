@@ -1,13 +1,10 @@
 class Pet
-  attr_reader :animal, :name
-  def initialize(animal, name)
-    @animal = animal
+  attr_reader :type, :name
+
+  def initialize(type, name)
+    @type = type
     @name = name
   end
-
-  # def to_s
-  #   "a #{animal} named #{name}"
-  # end
 end
 
 class Owner
@@ -18,31 +15,33 @@ class Owner
     @pets = []
   end
 
+  def add_pet(pet)
+    @pets << pet
+  end
+
   def number_of_pets
     pets.size
   end
 
-  def add_pet(pet)
-    self.pets << pet
-  end
 end
 
 class Shelter
-  @@adopters = []
+  def initialize
+    @adoptions = {}
+  end
+
   def adopt(owner, pet)
     owner.add_pet(pet)
-    if !@@adopters.include?(owner)
-      @@adopters << owner
-    end
+    @adoptions[owner] = owner.pets
   end
 
   def print_adoptions
-    @@adopters.each do |owner|
+    @adoptions.each do |owner, pets|
       puts "#{owner.name} has adopted the following pets:"
-      owner.number_of_pets.times do |idx|
-        puts "a #{owner.pets[idx].animal} named #{owner.pets[idx].name}"
+      pets.each do |pet|
+        puts "a #{pet.type} named #{pet.name}"
       end
-      puts ""
+      puts
     end
   end
 end
@@ -69,6 +68,9 @@ shelter.adopt(bholmes, chester)
 
 shelter.print_adoptions
 
+puts "#{phanson.name} has #{phanson.number_of_pets} adopted pets."
+puts "#{bholmes.name} has #{bholmes.number_of_pets} adopted pets."
+
 
 # P Hanson has adopted the following pets:
 # a cat named Butterscotch
@@ -80,9 +82,6 @@ shelter.print_adoptions
 # a parakeet named Sweetie Pie
 # a dog named Kennedy
 # a fish named Chester
-
-# puts "#{phanson.name} has #{phanson.number_of_pets} adopted pets."
-# puts "#{bholmes.name} has #{bholmes.number_of_pets} adopted pets."
 
 # P Hanson has 3 adopted pets.
 # B Holmes has 4 adopted pets.
